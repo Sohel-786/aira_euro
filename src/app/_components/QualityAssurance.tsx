@@ -111,19 +111,17 @@ export function QualityAssurance() {
                 {[1, 2, 3, 4].map((i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
-                    whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                    initial={{ opacity: 0, scale: 0.8, rotate: i % 2 === 0 ? -5 : 5 }}
+                    whileInView={{ opacity: 1, scale: 1, rotate: i % 2 === 0 ? 5 : -5 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                  whileHover={{ 
-                    scale: 1.05,
-                    y: -5,
-                  }}
-                  style={{ willChange: "transform" }}
-                    className="bg-white rounded-xl shadow-2xl p-6 border-2 border-primary-soft hover:border-primary transition-all cursor-pointer"
-                    style={{
-                      transform: `rotate(${i % 2 === 0 ? "5deg" : "-5deg"})`,
+                    whileHover={{ 
+                      scale: 1.05,
+                      y: -5,
+                      rotate: 0,
                     }}
+                    style={{ willChange: "transform" }}
+                    className="bg-white rounded-xl shadow-2xl p-6 border-2 border-primary-soft hover:border-primary transition-all cursor-pointer"
                   >
                     <div className="text-center">
                       <motion.div

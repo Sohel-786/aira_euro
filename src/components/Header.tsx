@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LuPhone, LuMail } from "react-icons/lu";
 import { Button } from "./ui/button";
@@ -13,6 +13,8 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [headerHeight, setHeaderHeight] = useState(125); // Default: top bar (50px) + main nav (~80px)
 
   const router = useRouter();
 
@@ -26,6 +28,24 @@ export function Header() {
       document.body.style.overflow = "";
     };
   }, [isMenuOpen, openDropdown]);
+
+  // Track scroll position to adjust header height for dropdown positioning
+  useEffect(() => {
+    const handleScroll = () => {
+      // Top bar is 50px, when scrolled past it, only main nav is visible (~80px)
+      if (window.scrollY > 50) {
+        setHeaderHeight(75); // Only main nav visible (sticky header)
+      } else {
+        setHeaderHeight(125); // Top bar (50px) + main nav (80px) visible
+      }
+    };
+
+    // Set initial height
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleSubmenu = (menu: string) => {
     setExpandedMenu(expandedMenu === menu ? null : menu);
@@ -69,7 +89,7 @@ export function Header() {
       </div>
 
       {/* Main Navigation */}
-      <header className="bg-white shadow-sm sticky top-0 z-50 px-4 sm:px-6 lg:px-24 py-4">
+      <header className="bg-white sticky top-0 z-50 px-4 sm:px-6 lg:px-24 py-4">
         <nav className="mx-auto">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -83,7 +103,7 @@ export function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden lg:flex items-center gap-8 h-full">
               <Link
                 href="/"
                 className="text-base font-bold leading-[150%] hover:text-primary transition-colors relative group"
@@ -102,16 +122,31 @@ export function Header() {
               {/* Products Dropdown */}
               <div
                 className="relative"
-                onMouseEnter={() => setOpenDropdown("products")}
+                onMouseEnter={() => {
+                  if (closeTimeoutRef.current) {
+                    clearTimeout(closeTimeoutRef.current);
+                    closeTimeoutRef.current = null;
+                  }
+                  setOpenDropdown("products");
+                }}
+                onMouseLeave={() => {
+                  closeTimeoutRef.current = setTimeout(() => {
+                    setOpenDropdown(null);
+                  }, 100);
+                }}
               >
                 <button
                   type="button"
                   className="flex items-center gap-1 text-base font-bold leading-[150%] hover:text-primary transition-colors relative group"
                 >
                   Products
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                    openDropdown === "products" ? "w-full" : "w-0 group-hover:w-full"
-                  }`}></span>
+                  <span
+                    className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                      openDropdown === "products"
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    }`}
+                  ></span>
                   <svg
                     className={`w-4 h-4 transition-transform ${
                       openDropdown === "products" ? "rotate-180" : ""
@@ -149,9 +184,26 @@ export function Header() {
             {/* Product Dropdown Full Screen */}
             <ProductDropdown
               isOpen={openDropdown === "products"}
-              onClose={() => setOpenDropdown(null)}
-              onMouseEnter={() => setOpenDropdown("products")}
-              onMouseLeave={() => setOpenDropdown(null)}
+              headerHeight={headerHeight}
+              onClose={() => {
+                if (closeTimeoutRef.current) {
+                  clearTimeout(closeTimeoutRef.current);
+                  closeTimeoutRef.current = null;
+                }
+                setOpenDropdown(null);
+              }}
+              onMouseEnter={() => {
+                if (closeTimeoutRef.current) {
+                  clearTimeout(closeTimeoutRef.current);
+                  closeTimeoutRef.current = null;
+                }
+                setOpenDropdown("products");
+              }}
+              onMouseLeave={() => {
+                closeTimeoutRef.current = setTimeout(() => {
+                  setOpenDropdown(null);
+                }, 100);
+              }}
             />
 
             {/* Right Side - Phone & CTA */}
@@ -174,8 +226,8 @@ export function Header() {
                   </p>
                 </div>
               </div>
-              <Button 
-                variant="default" 
+              <Button
+                variant="default"
                 onClick={() => router.push("/contact")}
                 className="border border-primary-light"
               >
