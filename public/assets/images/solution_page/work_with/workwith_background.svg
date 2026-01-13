@@ -1,0 +1,64 @@
+<svg width="1920" height="988" viewBox="0 0 1920 988" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.5">
+<g opacity="0.15" filter="url(#filter0_f_4980_50626)">
+<ellipse cx="209.629" cy="421.439" rx="209.629" ry="421.439" transform="matrix(-0.0133581 0.999911 -0.999382 -0.035158 1780.96 448.633)" fill="#EF7F1A"/>
+</g>
+<g opacity="0.15" filter="url(#filter1_f_4980_50626)">
+<ellipse cx="209.629" cy="421.439" rx="209.629" ry="421.439" transform="matrix(-0.0133581 0.999911 -0.999382 -0.035158 952.957 408.633)" fill="#7A231C"/>
+</g>
+<mask id="mask0_4980_50626" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="201" y="120" width="1518" height="1008">
+<ellipse cx="960" cy="624" rx="759" ry="504" fill="url(#paint0_radial_4980_50626)"/>
+</mask>
+<g mask="url(#mask0_4980_50626)">
+<g opacity="0.5">
+<line y1="188.5" x2="1920" y2="188.5" stroke="#F3A561"/>
+<line y1="268.5" x2="1920" y2="268.5" stroke="#F3A561"/>
+<line y1="348.5" x2="1920" y2="348.5" stroke="#F3A561"/>
+<line y1="428.5" x2="1920" y2="428.5" stroke="#F3A561"/>
+<line y1="508.5" x2="1920" y2="508.5" stroke="#F3A561"/>
+<line y1="588.5" x2="1920" y2="588.5" stroke="#F3A561"/>
+<line y1="668.5" x2="1920" y2="668.5" stroke="#F3A561"/>
+<line y1="748.5" x2="1920" y2="748.5" stroke="#F3A561"/>
+<line y1="828.5" x2="1920" y2="828.5" stroke="#F3A561"/>
+<line y1="908.5" x2="1920" y2="908.5" stroke="#F3A561"/>
+</g>
+<g opacity="0.5">
+<line x1="238.5" y1="1465" x2="238.5" y2="33" stroke="#F3A561"/>
+<line x1="318.5" y1="1465" x2="318.5" y2="33" stroke="#F3A561"/>
+<line x1="398.5" y1="1465" x2="398.5" y2="33" stroke="#F3A561"/>
+<line x1="478.5" y1="1465" x2="478.5" y2="33" stroke="#F3A561"/>
+<line x1="558.5" y1="1465" x2="558.5" y2="33" stroke="#F3A561"/>
+<line x1="638.5" y1="1465" x2="638.5" y2="33" stroke="#F3A561"/>
+<line x1="718.5" y1="1465" x2="718.5" y2="33" stroke="#F3A561"/>
+<line x1="798.5" y1="1465" x2="798.5" y2="33" stroke="#F3A561"/>
+<line x1="878.5" y1="1465" x2="878.5" y2="33" stroke="#F3A561"/>
+<line x1="958.5" y1="1465" x2="958.5" y2="33" stroke="#F3A561"/>
+<line x1="1038.5" y1="1465" x2="1038.5" y2="33" stroke="#F3A561"/>
+<line x1="1118.5" y1="1465" x2="1118.5" y2="33" stroke="#F3A561"/>
+<line x1="1198.5" y1="1465" x2="1198.5" y2="33" stroke="#F3A561"/>
+<line x1="1278.5" y1="1465" x2="1278.5" y2="33" stroke="#F3A561"/>
+<line x1="1358.5" y1="1465" x2="1358.5" y2="33" stroke="#F3A561"/>
+<line x1="1438.5" y1="1465" x2="1438.5" y2="33" stroke="#F3A561"/>
+<line x1="1518.5" y1="1465" x2="1518.5" y2="33" stroke="#F3A561"/>
+<line x1="1598.5" y1="1465" x2="1598.5" y2="33" stroke="#F3A561"/>
+<line x1="1678.5" y1="1465" x2="1678.5" y2="33" stroke="#F3A561"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_4980_50626" x="735.791" y="233.283" width="1242.38" height="820.285" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="100" result="effect1_foregroundBlur_4980_50626"/>
+</filter>
+<filter id="filter1_f_4980_50626" x="-92.2095" y="193.283" width="1242.38" height="820.285" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="100" result="effect1_foregroundBlur_4980_50626"/>
+</filter>
+<radialGradient id="paint0_radial_4980_50626" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(960 624) rotate(90) scale(504 759)">
+<stop stop-color="#737373"/>
+<stop offset="1" stop-color="#D9D9D9" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

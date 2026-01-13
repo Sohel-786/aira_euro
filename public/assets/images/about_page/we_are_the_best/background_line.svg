@@ -1,0 +1,50 @@
+<svg width="1920" height="1066" viewBox="0 0 1920 1066" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.5">
+<mask id="mask0_4810_18501" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="201" y="-43" width="1518" height="1008">
+<ellipse cx="960" cy="461" rx="759" ry="504" fill="url(#paint0_radial_4810_18501)"/>
+</mask>
+<g mask="url(#mask0_4810_18501)">
+<g opacity="0.5">
+<line y1="75.5" x2="1920" y2="75.5" stroke="#F3A561"/>
+<line y1="155.5" x2="1920" y2="155.5" stroke="#F3A561"/>
+<line y1="235.5" x2="1920" y2="235.5" stroke="#F3A561"/>
+<line y1="315.5" x2="1920" y2="315.5" stroke="#F3A561"/>
+<line y1="395.5" x2="1920" y2="395.5" stroke="#F3A561"/>
+<line y1="475.5" x2="1920" y2="475.5" stroke="#F3A561"/>
+<line y1="555.5" x2="1920" y2="555.5" stroke="#F3A561"/>
+<line y1="635.5" x2="1920" y2="635.5" stroke="#F3A561"/>
+<line y1="715.5" x2="1920" y2="715.5" stroke="#F3A561"/>
+<line y1="795.5" x2="1920" y2="795.5" stroke="#F3A561"/>
+<line y1="875.5" x2="1920" y2="875.5" stroke="#F3A561"/>
+<line y1="955.5" x2="1920" y2="955.5" stroke="#F3A561"/>
+</g>
+<g opacity="0.5">
+<line x1="238.5" y1="1432" x2="238.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="318.5" y1="1432" x2="318.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="398.5" y1="1432" x2="398.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="478.5" y1="1432" x2="478.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="558.5" y1="1432" x2="558.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="638.5" y1="1432" x2="638.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="718.5" y1="1432" x2="718.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="798.5" y1="1432" x2="798.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="878.5" y1="1432" x2="878.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="958.5" y1="1432" x2="958.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="1038.5" y1="1432" x2="1038.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="1118.5" y1="1432" x2="1118.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="1198.5" y1="1432" x2="1198.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="1278.5" y1="1432" x2="1278.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="1358.5" y1="1432" x2="1358.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="1438.5" y1="1432" x2="1438.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="1518.5" y1="1432" x2="1518.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="1598.5" y1="1432" x2="1598.5" y2="2.18556e-08" stroke="#F3A561"/>
+<line x1="1678.5" y1="1432" x2="1678.5" y2="2.18556e-08" stroke="#F3A561"/>
+</g>
+</g>
+</g>
+<defs>
+<radialGradient id="paint0_radial_4810_18501" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(960 461) rotate(90) scale(504 759)">
+<stop stop-color="#737373"/>
+<stop offset="1" stop-color="#D9D9D9" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

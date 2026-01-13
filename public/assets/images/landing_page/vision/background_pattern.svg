@@ -1,0 +1,45 @@
+<svg width="1619" height="630" viewBox="0 0 1619 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.5">
+<g opacity="0.15" filter="url(#filter0_f_4733_15894)">
+<ellipse cx="303.16" cy="609.472" rx="303.16" ry="609.472" transform="matrix(-0.0133581 0.999911 -0.999382 -0.035158 1422.25 32)" fill="#EF7F1A"/>
+</g>
+<mask id="mask0_4733_15894" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="384" y="32" width="851" height="564">
+<ellipse cx="809.255" cy="314" rx="425" ry="282" fill="url(#paint0_radial_4733_15894)"/>
+</mask>
+<g mask="url(#mask0_4733_15894)">
+<g opacity="0.5">
+<line x1="-150.745" y1="88.5" x2="1769.25" y2="88.5" stroke="#F3A561"/>
+<line x1="-150.745" y1="168.5" x2="1769.25" y2="168.5" stroke="#F3A561"/>
+<line x1="-150.745" y1="248.5" x2="1769.25" y2="248.5" stroke="#F3A561"/>
+<line x1="-150.745" y1="328.5" x2="1769.25" y2="328.5" stroke="#F3A561"/>
+<line x1="-150.745" y1="408.5" x2="1769.25" y2="408.5" stroke="#F3A561"/>
+<line x1="-150.745" y1="488.5" x2="1769.25" y2="488.5" stroke="#F3A561"/>
+<line x1="-150.745" y1="568.5" x2="1769.25" y2="568.5" stroke="#F3A561"/>
+</g>
+<g opacity="0.5">
+<line x1="407.755" y1="1285" x2="407.754" y2="-147" stroke="#F3A561"/>
+<line x1="487.755" y1="1285" x2="487.754" y2="-147" stroke="#F3A561"/>
+<line x1="567.755" y1="1285" x2="567.754" y2="-147" stroke="#F3A561"/>
+<line x1="647.755" y1="1285" x2="647.754" y2="-147" stroke="#F3A561"/>
+<line x1="727.755" y1="1285" x2="727.754" y2="-147" stroke="#F3A561"/>
+<line x1="807.755" y1="1285" x2="807.754" y2="-147" stroke="#F3A561"/>
+<line x1="887.755" y1="1285" x2="887.754" y2="-147" stroke="#F3A561"/>
+<line x1="967.755" y1="1285" x2="967.754" y2="-147" stroke="#F3A561"/>
+<line x1="1047.75" y1="1285" x2="1047.75" y2="-147" stroke="#F3A561"/>
+<line x1="1127.75" y1="1285" x2="1127.75" y2="-147" stroke="#F3A561"/>
+<line x1="1207.75" y1="1285" x2="1207.75" y2="-147" stroke="#F3A561"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_4733_15894" x="0" y="-190.197" width="1618.22" height="1007.8" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="100" result="effect1_foregroundBlur_4733_15894"/>
+</filter>
+<radialGradient id="paint0_radial_4733_15894" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(809.255 314) rotate(90) scale(282 425)">
+<stop stop-color="#737373"/>
+<stop offset="1" stop-color="#D9D9D9" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
