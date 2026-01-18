@@ -1,20 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LuPhone, LuMail } from "react-icons/lu";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { ProductDropdown } from "./ProductDropdown";
+import { categories } from "@/constants/products";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [headerHeight, setHeaderHeight] = useState(125); // Default: top bar (50px) + main nav (~80px)
+  const [headerHeight, setHeaderHeight] = useState(115); // Default: top bar (50px) + main nav (~80px)
 
   const router = useRouter();
 
@@ -34,9 +35,9 @@ export function Header() {
     const handleScroll = () => {
       // Top bar is 50px, when scrolled past it, only main nav is visible (~80px)
       if (window.scrollY > 50) {
-        setHeaderHeight(75); // Only main nav visible (sticky header)
+        setHeaderHeight(58); // Only main nav visible (sticky header)
       } else {
-        setHeaderHeight(125); // Top bar (50px) + main nav (80px) visible
+        setHeaderHeight(113); // Top bar (50px) + main nav (80px) visible
       }
     };
 
@@ -51,14 +52,29 @@ export function Header() {
     setExpandedMenu(expandedMenu === menu ? null : menu);
   };
 
-  const productsSubmenu = [
-    { label: "Pneumatic Actuators", href: "/products/actuators" },
-    { label: "Ball Valves", href: "/products/ball-valves" },
-    { label: "Butterfly Valves", href: "/products/butterfly-valves" },
-    { label: "Control Valves", href: "/products/control-valves" },
-    { label: "Solenoid Valves", href: "/products/solenoid-valves" },
-    { label: "Plug Valves", href: "/products/plug-valves" },
-  ];
+  const toggleCategory = (categorySlug: string) => {
+    setExpandedCategory(
+      expandedCategory === categorySlug ? null : categorySlug,
+    );
+  };
+
+  // Generate products submenu from categories
+  const productsSubmenu = categories.map((category) => ({
+    label: category.title,
+    href: `/products/${category.slug}`,
+  }));
+
+  // Helper function to get product ID from product name and category
+  const getProductId = (
+    productName: string,
+    categorySlug: string,
+  ): string | null => {
+    const category = categories.find((cat) => cat.slug === categorySlug);
+    if (!category) return null;
+
+    const product = category.products.find((prod) => prod.name === productName);
+    return product ? product.id : null;
+  };
 
   return (
     <>
@@ -89,11 +105,11 @@ export function Header() {
       </div>
 
       {/* Main Navigation */}
-      <header className="bg-white sticky top-0 z-50 px-4 sm:px-6 lg:px-24 py-4">
+      <header className="bg-white sticky top-0 z-[105] px-4 sm:px-6 ">
         <nav className="mx-auto">
-          <div className="flex items-center justify-between">
+          <div className="flex justify-between h-full">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 lg:px-24 py-4">
               <div className="bg-primary rounded-lg px-3 py-2 border border-primary-light">
                 <span className="text-white font-bold text-xl">aira</span>
               </div>
@@ -103,7 +119,7 @@ export function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8 h-full">
+            <div className="hidden lg:flex items-center justify-center gap-8">
               <Link
                 href="/"
                 className="text-base font-bold leading-[150%] hover:text-primary transition-colors relative group"
@@ -113,7 +129,7 @@ export function Header() {
               </Link>
               <Link
                 href="/about"
-                className="text-base font-bold leading-[150%] hover:text-primary transition-colors relative group"
+                className="text-base font-bold leading-[150%] hover:text-primary transition-colors relative group z-[200]"
               >
                 About Us
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
@@ -121,7 +137,7 @@ export function Header() {
 
               {/* Products Dropdown */}
               <div
-                className="relative"
+                className="relative py-3"
                 onMouseEnter={() => {
                   if (closeTimeoutRef.current) {
                     clearTimeout(closeTimeoutRef.current);
@@ -207,7 +223,7 @@ export function Header() {
             />
 
             {/* Right Side - Phone & CTA */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-6 lg:px-24 py-4">
               <div className="flex justify-center items-center gap-2">
                 <a
                   href="tel:+919099477256"
@@ -363,16 +379,107 @@ export function Header() {
                             className="overflow-hidden"
                           >
                             <div className="pl-4 space-y-0">
-                              {productsSubmenu.map((item, index) => (
-                                <Link
-                                  key={index}
-                                  href={item.href}
-                                  className="block px-4 py-3 text-sm font-normal text-custom_neutral-600 hover:text-primary transition-colors border-b border-primary-soft/50 last:border-0"
-                                  onClick={() => setIsMenuOpen(false)}
-                                >
-                                  {item.label}
-                                </Link>
-                              ))}
+                              {categories.map((category) => {
+                                const isCategoryExpanded =
+                                  expandedCategory === category.slug;
+                                return (
+                                  <div
+                                    key={category.slug}
+                                    className="border-b border-primary-soft/50 last:border-0"
+                                  >
+                                    {/* Category Header - Clickable Link with Expand Button */}
+                                    <div className="flex items-center">
+                                      <Link
+                                        href={`/products/${category.slug}`}
+                                        className="flex-1 px-4 py-3 text-sm font-semibold text-custom_neutral-900 hover:text-primary transition-colors"
+                                        onClick={(e) => {
+                                          // Don't close menu if clicking expand button area
+                                          if (
+                                            (e.target as HTMLElement).closest(
+                                              ".expand-button",
+                                            )
+                                          ) {
+                                            e.preventDefault();
+                                            return;
+                                          }
+                                          setIsMenuOpen(false);
+                                        }}
+                                      >
+                                        {category.title}
+                                      </Link>
+                                      <button
+                                        type="button"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          toggleCategory(category.slug);
+                                        }}
+                                        className="expand-button px-4 py-3 flex items-center justify-center hover:bg-primary-soft/20 transition-colors"
+                                        aria-label={
+                                          isCategoryExpanded
+                                            ? "Collapse"
+                                            : "Expand"
+                                        }
+                                      >
+                                        <motion.svg
+                                          animate={{
+                                            rotate: isCategoryExpanded
+                                              ? 180
+                                              : 0,
+                                          }}
+                                          transition={{ duration: 0.2 }}
+                                          className="w-4 h-4 text-custom_neutral-600"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M19 9l-7 7-7-7"
+                                          />
+                                        </motion.svg>
+                                      </button>
+                                    </div>
+
+                                    {/* Products List - Expandable */}
+                                    <AnimatePresence>
+                                      {isCategoryExpanded && (
+                                        <motion.div
+                                          initial={{ height: 0, opacity: 0 }}
+                                          animate={{
+                                            height: "auto",
+                                            opacity: 1,
+                                          }}
+                                          exit={{ height: 0, opacity: 0 }}
+                                          transition={{ duration: 0.2 }}
+                                          className="overflow-hidden"
+                                        >
+                                          <div className="pl-6 space-y-0">
+                                            {category.products.map(
+                                              (product) => {
+                                                const productHref = `/products/${category.slug}/${product.id}`;
+                                                return (
+                                                  <Link
+                                                    key={product.id}
+                                                    href={productHref}
+                                                    className="block px-4 py-2.5 text-sm font-normal text-custom_neutral-600 hover:text-primary transition-colors border-b border-primary-soft/30 last:border-0"
+                                                    onClick={() =>
+                                                      setIsMenuOpen(false)
+                                                    }
+                                                  >
+                                                    {product.name}
+                                                  </Link>
+                                                );
+                                              },
+                                            )}
+                                          </div>
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+                                  </div>
+                                );
+                              })}
                             </div>
                           </motion.div>
                         )}
