@@ -16,6 +16,8 @@ export function Header() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [headerHeight, setHeaderHeight] = useState(115); // Default: top bar (50px) + main nav (~80px)
+  const [showTopBar, setShowTopBar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const router = useRouter();
 
@@ -63,23 +65,29 @@ export function Header() {
     };
   }, [isMenuOpen, openDropdown]);
 
-  // Track scroll position to adjust header height for dropdown positioning
+  // Track scroll position to hide/show topbar and adjust header height for dropdown positioning
   useEffect(() => {
     const handleScroll = () => {
-      // Top bar is 50px, when scrolled past it, only main nav is visible (~80px)
-      if (window.scrollY > 50) {
-        setHeaderHeight(58); // Only main nav visible (sticky header)
+      const currentScrollY = window.scrollY;
+      
+      // Hide topbar when scrolling down past 50px OR when dropdown is open, show when at top and dropdown is closed
+      if (currentScrollY > 50 || openDropdown === "products") {
+        setShowTopBar(false);
+        setHeaderHeight(58); // Only main nav visible (fixed header)
       } else {
+        setShowTopBar(true);
         setHeaderHeight(113); // Top bar (50px) + main nav (80px) visible
       }
+      
+      setLastScrollY(currentScrollY);
     };
 
-    // Set initial height
+    // Set initial state
     handleScroll();
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [openDropdown]);
 
   const toggleSubmenu = (menu: string) => {
     setExpandedMenu(expandedMenu === menu ? null : menu);
@@ -111,34 +119,55 @@ export function Header() {
 
   return (
     <>
-      {/* Top Bar - Hidden on mobile when scrolling, always visible on desktop */}
-      <div className="bg-custom_neutral-900 text-white px-4 sm:px-6 lg:px-24 hidden lg:block">
-        <div className="h-[50px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm font-medium leading-[150%]">
-          <div className="flex items-center gap-4 sm:gap-8">
+      {/* Top Bar - Hidden when scrolling down or when dropdown is open, visible at top */}
+      <motion.div
+        initial={{ y: 0, opacity: 1 }}
+        animate={{ 
+          y: showTopBar && openDropdown !== "products" ? 0 : -50, 
+          opacity: showTopBar && openDropdown !== "products" ? 1 : 0 
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="bg-custom_neutral-900 text-white px-3 sm:px-4 md:px-6 lg:px-24 fixed top-0 left-0 right-0 z-[106]"
+        style={{ pointerEvents: showTopBar && openDropdown !== "products" ? "auto" : "none" }}
+      >
+        <div className="min-h-[44px] sm:h-[50px] mx-auto flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-1.5 sm:gap-2 py-1.5 sm:py-0">
+          {/* Contact Info - Left Side */}
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 sm:gap-4 md:gap-6 text-[10px] sm:text-xs md:text-sm font-medium leading-tight sm:leading-[150%]">
             <a
               href="mailto:mkt@airaindia.com"
-              className="hover:text-primary-light transition-colors flex items-center justify-center gap-1"
+              className="hover:text-primary-light transition-colors flex items-center gap-1.5 sm:gap-2"
             >
-              <LuMail className="w-4 h-4" />
-              mkt@airaindia.com
+              <LuMail className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+              <span className="hidden sm:inline whitespace-nowrap">mkt@airaindia.com</span>
+              <span className="sm:hidden whitespace-nowrap text-[10px]">Email</span>
             </a>
             <a
               href="tel:+919099477256"
-              className="hover:text-primary-light transition-colors flex items-center justify-center gap-1"
+              className="hover:text-primary-light transition-colors flex items-center gap-1.5 sm:gap-2"
             >
-              <LuPhone className="w-4 h-4" />
-              +91 90994 77256
+              <LuPhone className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+              <span className="text-[10px] sm:text-xs whitespace-nowrap">+91 90994 77256</span>
             </a>
           </div>
 
-          <div className="flex justify-center items-center gap-4 text-xs">
-            <p>Working Days: Monday to Saturday</p>
+          {/* Working Days - Right Side */}
+          <div className="flex justify-center items-center text-[10px] sm:text-xs font-medium leading-tight sm:leading-[150%]">
+            <p className="whitespace-nowrap">
+              <span className="hidden sm:inline">Working Days: </span>
+              <span>Mon-Sat</span>
+            </p>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Main Navigation - Always sticky on mobile and desktop */}
-      <header className="bg-white sticky top-0 z-[105] px-4 sm:px-6 shadow-sm">
+      {/* Main Navigation - Fixed on top, always visible */}
+      <header 
+        className="bg-white fixed left-0 right-0 z-[105] px-4 sm:px-6 shadow-sm"
+        style={{
+          top: showTopBar && openDropdown !== "products" ? "50px" : "0px",
+          transition: "top 0.3s ease-in-out"
+        }}
+      >
         <nav className="mx-auto">
           <div className="flex justify-between h-full">
             {/* Logo */}
@@ -551,6 +580,14 @@ export function Header() {
           </>
         )}
       </AnimatePresence>
+
+      {/* Spacer to prevent content from being hidden behind fixed header */}
+      <motion.div
+        animate={{ height: showTopBar && openDropdown !== "products" ? "130px" : "80px" }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="w-full"
+        aria-hidden="true"
+      />
     </>
   );
 }
