@@ -21,12 +21,45 @@ export function Header() {
 
   useEffect(() => {
     if (isMenuOpen || openDropdown === "products") {
+      // Prevent body scroll when menu or dropdown is open
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
       document.body.style.overflow = "hidden";
+      
+      // Store scroll position for restoration
+      document.body.setAttribute('data-scroll-y', scrollY.toString());
     } else {
+      // Restore body scroll
+      const scrollY = document.body.getAttribute('data-scroll-y');
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
       document.body.style.overflow = "";
+      document.body.removeAttribute('data-scroll-y');
+      
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY, 10));
+      }
     }
     return () => {
+      // Cleanup: restore scroll on unmount
+      const scrollY = document.body.getAttribute('data-scroll-y');
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
       document.body.style.overflow = "";
+      document.body.removeAttribute('data-scroll-y');
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY, 10));
+      }
     };
   }, [isMenuOpen, openDropdown]);
 
@@ -498,7 +531,7 @@ export function Header() {
                       className="px-4 py-3"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Contact
+                      Contact Us
                     </Link>
                   </div>
                 </nav>

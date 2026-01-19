@@ -37,12 +37,14 @@ export function Footer() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
             {/* Leftmost Section - Quick Contact & Address */}
             <div className="flex flex-col">
-              <Button
-                variant="outline"
-                className="mb-6 border-primary text-white hover:bg-primary w-fit"
-              >
-                Quick Contact
-              </Button>
+              <Link href="/contact">
+                <Button
+                  variant="outline"
+                  className="mb-6 border-primary text-white hover:bg-primary w-fit"
+                >
+                  Quick Contact
+                </Button>
+              </Link>
               <p className="text-white/80 mb-6 text-sm leading-relaxed">
                 If you have any questions or need help, feel free to contact with our team.
               </p>
@@ -69,8 +71,17 @@ export function Footer() {
                 About AIRA
               </h3>
               <ul className="flex flex-col gap-3">
+                <li>
+                  <Link href="/about" className={footerLink}>
+                    <span className="text-primary-light mr-2 group-hover:translate-x-1 transition-transform inline-block">
+                      →
+                    </span>
+                    <span className="text-sm leading-[150%] text-white/80">
+                      About Us
+                    </span>
+                  </Link>
+                </li>
                 {[
-                  "About Us",
                   "Quality Policy & Testing",
                   "Production capacity",
                   "Design Division",

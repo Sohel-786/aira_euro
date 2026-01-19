@@ -146,7 +146,15 @@ function LoadingFallback({ imagePath }: { imagePath: string }) {
 }
 
 // Component to handle camera animation for zoom-to-point
-function CameraController({ targetPoint, controlsRef }: { targetPoint: Vector3 | null; controlsRef: React.RefObject<any> }) {
+function CameraController({ 
+  targetPoint, 
+  controlsRef,
+  onAnimationComplete 
+}: { 
+  targetPoint: Vector3 | null; 
+  controlsRef: React.RefObject<any>;
+  onAnimationComplete?: () => void;
+}) {
   const { camera } = useThree();
   
   useEffect(() => {
@@ -180,11 +188,13 @@ function CameraController({ targetPoint, controlsRef }: { targetPoint: Vector3 |
       
       if (progress < 1) {
         requestAnimationFrame(animate);
+      } else if (onAnimationComplete) {
+        onAnimationComplete();
       }
     };
     
     animate();
-  }, [targetPoint, camera, controlsRef]);
+  }, [targetPoint, camera, controlsRef, onAnimationComplete]);
 
   return null;
 }

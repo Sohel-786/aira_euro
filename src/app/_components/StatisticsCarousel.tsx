@@ -54,39 +54,74 @@ export function StatisticsCarousel() {
       </div>
 
       <div className="relative z-10">
+        {/* Desktop: Flex layout with heading and buttons aligned */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="mb-8 sm:mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-custom_neutral-900">
-            Our <span className="text-primary">Achievements</span>
-          </h2>
-          <p className="text-lg text-custom_neutral-600 max-w-2xl mx-auto">
-            Numbers that reflect our commitment to excellence and innovation
-          </p>
+          {/* Desktop Layout: Heading and buttons side by side */}
+          <div className="hidden lg:flex items-start justify-between gap-6 mb-4">
+            <div className="flex-1 text-center lg:text-left">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-custom_neutral-900">
+                Our <span className="text-primary">Achievements</span>
+              </h2>
+              <p className="text-lg text-custom_neutral-600 max-w-2xl mx-auto lg:mx-0">
+                Numbers that reflect our commitment to excellence and innovation
+              </p>
+            </div>
+            
+            {/* Desktop Navigation Arrows - Aligned with heading */}
+            <div className="flex gap-3 flex-shrink-0 pt-2">
+              <button
+                onClick={() => instanceRef.current?.prev()}
+                className="w-14 h-14 rounded-full flex items-center justify-center bg-white border border-custom_neutral-200 shadow-[0_0_25px_0_#00000014] hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
+                aria-label="Previous slide"
+              >
+                <FaArrowLeftLong />
+              </button>
+              <button
+                onClick={() => instanceRef.current?.next()}
+                className="w-14 h-14 rounded-full flex items-center justify-center bg-white border border-custom_neutral-200 shadow-[0_0_25px_0_#00000014] hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
+                aria-label="Next slide"
+              >
+                <FaArrowRightLong />
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Layout: Centered heading and description */}
+          <div className="lg:hidden text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-custom_neutral-900">
+              Our <span className="text-primary">Achievements</span>
+            </h2>
+            <p className="text-base sm:text-lg text-custom_neutral-600 max-w-2xl mx-auto px-4">
+              Numbers that reflect our commitment to excellence and innovation
+            </p>
+          </div>
         </motion.div>
+
+        {/* Mobile Navigation Arrows - Positioned below heading */}
+        <div className="flex lg:hidden justify-center gap-3 mb-6">
+          <button
+            onClick={() => instanceRef.current?.prev()}
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-white border border-custom_neutral-200 shadow-[0_0_25px_0_#00000014] hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
+            aria-label="Previous slide"
+          >
+            <FaArrowLeftLong className="text-sm sm:text-base" />
+          </button>
+          <button
+            onClick={() => instanceRef.current?.next()}
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-white border border-custom_neutral-200 shadow-[0_0_25px_0_#00000014] hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
+            aria-label="Next slide"
+          >
+            <FaArrowRightLong className="text-sm sm:text-base" />
+          </button>
+        </div>
 
         {/* Carousel Container - Added padding for hover effects */}
         <div className="relative py-8 -my-8">
-          {/* Navigation Arrows */}
-          <div className="absolute right-0 -top-20 flex gap-3 z-10">
-            <button
-              onClick={() => instanceRef.current?.prev()}
-              className="w-14 h-14 rounded-full flex items-center justify-center bg-white border border-custom_neutral-200 shadow-[0_0_25px_0_#00000014] hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
-              aria-label="Previous slide"
-            >
-              <FaArrowLeftLong />
-            </button>
-            <button
-              onClick={() => instanceRef.current?.next()}
-              className="w-14 h-14 rounded-full flex items-center justify-center bg-white border border-custom_neutral-200 shadow-[0_0_25px_0_#00000014] hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
-              aria-label="Next slide"
-            >
-              <FaArrowRightLong />
-            </button>
-          </div>
 
           {/* Slider - Added padding to allow hover scale */}
           <div ref={sliderRef} className="keen-slider cursor-grab active:cursor-grabbing py-4">

@@ -75,13 +75,16 @@ export function ProductDropdown({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="product-dropdown fixed bg-white z-50 overflow-y-auto"
+          className="product-dropdown fixed bg-white z-50 overflow-y-auto overscroll-contain scrollbar-thin"
           style={{
             top: `${headerHeight}px`,
             left: 0,
             right: 0,
             bottom: 0,
             width: "100%",
+            height: `calc(100vh - ${headerHeight}px)`,
+            overscrollBehavior: "contain",
+            WebkitOverflowScrolling: "touch",
           }}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
