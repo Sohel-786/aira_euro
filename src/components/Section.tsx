@@ -14,7 +14,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
         ref={ref}
         id={id}
         aria-label={ariaLabel}
-        className={`w-full px-4 sm:px-6 lg:px-24 ${className ?? ""}`}
+        className={`w-full px-3 sm:px-4 md:px-6 lg:px-24 overflow-x-hidden max-w-full ${className ?? ""}`}
       >
         <div className="mx-auto max-w-[1340px]">{children}</div>
       </section>

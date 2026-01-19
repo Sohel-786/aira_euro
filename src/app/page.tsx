@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default function HomePage() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-x-hidden max-w-full">
       {/* Background decorative elements */}
       <Image
         src="/assets/images/landing_page/HomePageDesign.svg"

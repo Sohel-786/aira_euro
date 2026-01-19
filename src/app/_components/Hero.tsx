@@ -42,7 +42,7 @@ export function Hero() {
       id="hero"
       ariaLabel="Hero section"
       ref={containerRef}
-      className="relative overflow-hidden w-full min-h-screen flex items-center bg-gradient-to-b from-custom_neutral-900 via-custom_neutral-800 to-custom_neutral-900"
+      className="relative overflow-hidden overflow-y-hidden w-full min-h-screen flex items-center bg-gradient-to-b from-custom_neutral-900 via-custom_neutral-800 to-custom_neutral-900"
     >
       {/* Static Background Grid - Using CSS instead of JS */}
       <div 
@@ -78,19 +78,19 @@ export function Hero() {
         ))}
       </div>
 
-      <div className="relative z-10 w-full py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 w-full py-20 lg:py-32 overflow-x-hidden overflow-y-hidden">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-w-0">
           {/* Left Content */}
           <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full"
+            className="w-full min-w-0 overflow-x-hidden overflow-y-hidden"
           >
             {/* Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
               <Badge text="Leading Valve Manufacturer & Exporter in India" />
@@ -98,32 +98,32 @@ export function Hero() {
 
             {/* Main Heading */}
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[110%] mb-6 text-white"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-bold leading-[110%] mb-6 text-white break-words overflow-wrap-anywhere"
             >
               <motion.span
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
                 className="block text-primary mb-2"
               >
                 AUTOMATION EXPERTS
               </motion.span>
               <motion.span
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
                 className="block"
               >
                 IN VALVE
               </motion.span>
               <motion.span
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                className="block text-primary"
+                className="block text-primary break-words"
               >
                 MANUFACTURING
               </motion.span>
@@ -131,10 +131,10 @@ export function Hero() {
 
             {/* Description */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="text-lg sm:text-xl text-white/80 leading-relaxed mb-8 pr-0 sm:pr-12"
+              className="text-sm sm:text-lg md:text-xl text-white/80 leading-relaxed mb-8 pr-0 sm:pr-12"
             >
               Specializing in automation products, we have evolved into one of the
               largest manufacturing units offering comprehensive one-stop solutions
@@ -143,29 +143,29 @@ export function Hero() {
 
             {/* Stats */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="grid grid-cols-2 gap-6 mb-10"
+              className="grid grid-cols-2 gap-3 sm:gap-6 mb-10"
             >
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
-                <div className="text-4xl sm:text-5xl font-bold text-primary mb-1">
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20">
+                <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-primary mb-1">
                   1000+
                 </div>
-                <div className="text-sm text-white/70">Product Range</div>
+                <div className="text-xs sm:text-sm text-white/70">Product Range</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
-                <div className="text-4xl sm:text-5xl font-bold text-primary mb-1">
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20">
+                <div className="text-2xl sm:text-4xl md:text-5xl font-bold text-primary mb-1">
                   6-3000
                 </div>
-                <div className="text-sm text-white/70">Size Range (mm)</div>
+                <div className="text-xs sm:text-sm text-white/70">Size Range (mm)</div>
               </div>
             </motion.div>
 
             {/* CTA Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: 0.9 }}
               className="flex flex-col sm:flex-row gap-4"
             >

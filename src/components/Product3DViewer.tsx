@@ -2,7 +2,7 @@
 
 import { Suspense, useState, useRef, useEffect } from "react";
 import { Box3, Vector3 } from "three";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera, Environment, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -12,14 +12,22 @@ interface Product3DViewerProps {
 }
 
 // Component to handle model loading and rotation
-function Model({ modelPath, onLoaded, isDragging, setIsDragging }: { 
+function Model({ 
+  modelPath, 
+  onLoaded, 
+  isDragging, 
+  setIsDragging,
+  onModelClick 
+}: { 
   modelPath: string; 
   onLoaded: () => void;
   isDragging: boolean;
   setIsDragging: (value: boolean) => void;
+  onModelClick?: (point: Vector3) => void;
 }) {
   const { scene } = useGLTF(modelPath);
   const modelRef = useRef<THREE.Group>(null);
+  const { raycaster, camera, gl } = useThree();
 
   // Auto-rotate when not being dragged
   useFrame((state, delta) => {
@@ -59,6 +67,53 @@ function Model({ modelPath, onLoaded, isDragging, setIsDragging }: {
     }
   }, [scene]);
 
+  // Handle click on model for zoom-to-point
+  useEffect(() => {
+    if (!onModelClick || !modelRef.current) return;
+
+    let dragStartTime = 0;
+    let isDraggingClick = false;
+
+    const handleMouseDown = () => {
+      dragStartTime = Date.now();
+      isDraggingClick = false;
+    };
+
+    const handleMouseMove = () => {
+      if (Date.now() - dragStartTime > 50) {
+        isDraggingClick = true;
+      }
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      // Don't zoom if user was dragging
+      if (isDraggingClick || isDragging) return;
+
+      const rect = gl.domElement.getBoundingClientRect();
+      const mouse = new THREE.Vector2();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      
+      const intersects = raycaster.intersectObject(modelRef.current!, true);
+      if (intersects.length > 0) {
+        const point = intersects[0].point;
+        onModelClick(point);
+      }
+    };
+
+    gl.domElement.addEventListener('mousedown', handleMouseDown);
+    gl.domElement.addEventListener('mousemove', handleMouseMove);
+    gl.domElement.addEventListener('click', handleClick);
+    
+    return () => {
+      gl.domElement.removeEventListener('mousedown', handleMouseDown);
+      gl.domElement.removeEventListener('mousemove', handleMouseMove);
+      gl.domElement.removeEventListener('click', handleClick);
+    };
+  }, [onModelClick, isDragging, raycaster, camera, gl]);
+
   return (
     <group ref={modelRef}>
       <primitive object={scene} />
@@ -90,11 +145,57 @@ function LoadingFallback({ imagePath }: { imagePath: string }) {
   );
 }
 
+// Component to handle camera animation for zoom-to-point
+function CameraController({ targetPoint, controlsRef }: { targetPoint: Vector3 | null; controlsRef: React.RefObject<any> }) {
+  const { camera } = useThree();
+  
+  useEffect(() => {
+    if (!targetPoint || !controlsRef.current) return;
+
+    const controls = controlsRef.current;
+    const startPosition = camera.position.clone();
+    const startTarget = controls.target.clone();
+    
+    // Calculate direction from current camera position to target point
+    const direction = new THREE.Vector3().subVectors(targetPoint, startPosition).normalize();
+    
+    // Calculate new camera position (closer to the point)
+    const distance = Math.min(startPosition.distanceTo(targetPoint) * 0.5, 2);
+    const newPosition = new THREE.Vector3().addVectors(targetPoint, direction.multiplyScalar(distance));
+    
+    // Animate camera
+    const duration = 1000; // 1 second
+    const startTime = Date.now();
+    
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function (ease-out)
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      
+      camera.position.lerpVectors(startPosition, newPosition, easeOut);
+      controls.target.lerpVectors(startTarget, targetPoint, easeOut);
+      controls.update();
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    animate();
+  }, [targetPoint, camera, controlsRef]);
+
+  return null;
+}
+
 export default function Product3DViewer({ modelPath, fallbackImage }: Product3DViewerProps) {
   const [modelLoaded, setModelLoaded] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [targetPoint, setTargetPoint] = useState<Vector3 | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const controlsRef = useRef<any>(null);
 
   useEffect(() => {
     // Preload the image
@@ -153,17 +254,34 @@ export default function Product3DViewer({ modelPath, fallbackImage }: Product3DV
             onLoaded={() => setModelLoaded(true)}
             isDragging={isDragging}
             setIsDragging={setIsDragging}
+            onModelClick={(point) => {
+              if (!isDragging) {
+                  setTargetPoint(point);
+              }
+            }}
           />
 
-          {/* Orbit Controls - Allow rotation but disable zoom */}
+          {/* Camera Controller for zoom-to-point */}
+          <CameraController 
+            targetPoint={targetPoint} 
+            controlsRef={controlsRef}
+            onAnimationComplete={() => setTargetPoint(null)}
+          />
+
+          {/* Orbit Controls - Allow rotation, zoom, and pan */}
           <OrbitControls
-            enableZoom={false}
-            enablePan={false}
+            ref={controlsRef}
+            enableZoom={true}
+            enablePan={true}
             minPolarAngle={Math.PI / 3}
             maxPolarAngle={2 * Math.PI / 3}
             autoRotate={false}
             dampingFactor={0.05}
             rotateSpeed={0.8}
+            panSpeed={0.8}
+            minDistance={1.5}
+            maxDistance={8}
+            zoomSpeed={1.2}
             onStart={() => setIsDragging(true)}
             onEnd={() => setIsDragging(false)}
           />
@@ -173,7 +291,7 @@ export default function Product3DViewer({ modelPath, fallbackImage }: Product3DV
       {/* Instructions overlay */}
       <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-2 rounded-lg">
         <div className="flex items-center justify-between">
-          <span>Drag to rotate • Auto-rotating</span>
+          <span>Drag to rotate • Right-click drag to pan • Scroll to zoom • Click to zoom in</span>
           {!modelLoaded && <span className="text-primary">Loading 3D model...</span>}
         </div>
       </div>

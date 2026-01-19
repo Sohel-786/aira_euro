@@ -5,6 +5,8 @@
 html,
 body {
   @apply bg-white text-custom_neutral-900 antialiased;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -14,6 +16,8 @@ body {
 
 main {
   @apply min-h-screen;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 @layer base {
@@ -128,6 +132,25 @@ main {
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Custom scrollbar styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(59, 130, 246, 0.3);
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(59, 130, 246, 0.5);
   }
 }
 

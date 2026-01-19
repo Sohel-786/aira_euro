@@ -78,8 +78,8 @@ export function Header() {
 
   return (
     <>
-      {/* Top Bar */}
-      <div className="bg-custom_neutral-900 text-white px-4 sm:px-6 lg:px-24">
+      {/* Top Bar - Hidden on mobile when scrolling, always visible on desktop */}
+      <div className="bg-custom_neutral-900 text-white px-4 sm:px-6 lg:px-24 hidden lg:block">
         <div className="h-[50px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm font-medium leading-[150%]">
           <div className="flex items-center gap-4 sm:gap-8">
             <a
@@ -104,8 +104,8 @@ export function Header() {
         </div>
       </div>
 
-      {/* Main Navigation */}
-      <header className="bg-white sticky top-0 z-[105] px-4 sm:px-6 ">
+      {/* Main Navigation - Always sticky on mobile and desktop */}
+      <header className="bg-white sticky top-0 z-[105] px-4 sm:px-6 shadow-sm">
         <nav className="mx-auto">
           <div className="flex justify-between h-full">
             {/* Logo */}
@@ -289,7 +289,7 @@ export function Header() {
                 duration: 0.3,
                 ease: [0.4, 0, 0.2, 1],
               }}
-              className="fixed inset-0 w-full h-full bg-white z-[101] lg:hidden overflow-y-auto"
+              className="fixed inset-0 w-full h-full bg-white z-[200] lg:hidden overflow-y-auto"
             >
               <div className="flex flex-col h-full bg-white">
                 {/* Header with Logo and Close Button */}
